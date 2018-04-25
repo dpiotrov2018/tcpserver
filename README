@@ -1,0 +1,58 @@
++++
+```
+CTcpServer class with tests. 
+Done as test work for Percepto. 
+
+It implemented using C++11 standart; Sockets managed using POSIX API.
+
+Class features
+
+The class constructor accepts:
+* Port number (in which the class should listen to incoming connections).
+* Callback function for handling incoming data.
+The class should listen on the given port for incoming connections, as well as read
+incoming messages from open connections.
+On each incoming message the class:
+* Respond with the string “OK”.
+* Call the callback function with the incoming data as the only argument.
+* Add data to an internal data queue.
+
+* Implementation of the simple communication protocol:
+		// header 4 bytes:
+		// byte 1 protocol version
+		// byte 2 code of the operation
+		// bytes 3 and 4 (uint16_t little-endian) length of the data block that continue after header.
+		// bytes 5 ... data block
+		// After data successfully received, server send "OK\0" sequence as answer.
+		// If data not properly received, just close the socket. Client side will get exception about it.
+
+The class include a public function to “pop” data from the internal data queue.
+
+The entire class operation takes place on a separate thread, allowing the rest of
+the program to run uninterrupted.
+
+---------------------------------
+Tests
+
+For testing purpose implemented simple command line application "tcpserver" that use this class.
+To build it go to project directory and run "make" command.
+Then run "./tcpserver"
+
+
+Test client also present. It can be found in directory "test_client".
+It implemented in python.
+to run it do 
+cd ./test_client
+python test_client.py
+ 
+
+Author:
+Dmitry Piotrovsky
+
+
+License:
+MIT
+ 
+
+```
++++
